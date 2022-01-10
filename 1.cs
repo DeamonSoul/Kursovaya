@@ -26,11 +26,7 @@ namespace NetConsoleApp
                 client.Send(mess);
                 Console.WriteLine("Message send");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                Console.ReadKey();
-            }
+
         }
     }
 }
