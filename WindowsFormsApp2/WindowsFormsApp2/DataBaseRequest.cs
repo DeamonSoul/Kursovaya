@@ -36,6 +36,13 @@ namespace WindowsFormsApp2
             return table;
         }
 
+        /// <summary>
+        /// Заносит в базу данных нового пользователя и создает новую таблицу для чеков
+        /// </summary>
+        /// <param name="inn"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
         public static void WriteNewUser(string inn, string name, string email, string password)
         {
             DataBaseInit DB = new DataBaseInit();
