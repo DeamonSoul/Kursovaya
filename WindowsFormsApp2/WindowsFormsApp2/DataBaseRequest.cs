@@ -13,8 +13,19 @@ namespace WindowsFormsApp2
 {
     internal static class DataBaseRequest
     {
-        
+        public static DataTable AskForData(string commandStr, params string[] args)
+        {
+            DataBaseInit DB = new DataBaseInit();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+            MySqlCommand command = new MySqlCommand(commandStr, DB.GetConnector());
+            for (int i = 0; i < args.Length; i++)
+                command.Parameters.Add("@P" + i.ToString(), MySqlDbType.VarChar).Value = args[i];
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            return table;
+        }
 
-       
+
     }
 }
