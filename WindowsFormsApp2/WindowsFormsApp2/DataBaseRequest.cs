@@ -13,6 +13,8 @@ namespace WindowsFormsApp2
 {
     internal static class DataBaseRequest
     {
+
+        /// <returns></returns>
         public static DataTable AskForData(string commandStr, params string[] args)
         {
             DataBaseInit DB = new DataBaseInit();
@@ -25,7 +27,5 @@ namespace WindowsFormsApp2
             adapter.Fill(table);
             return table;
         }
-
-
     }
 }
