@@ -19,8 +19,18 @@ namespace NetConsoleApp
             string from = "islammusin@mail.ru";
             string to = "islammusin.musin@yandex.ru";
             string subject = "Письмо от C Sharp";
-            string body = "Привет! \n\n\n Это тестовое письмо";
+            string body = "Привет! \n\n\n Это тестовое письмо от C Sharp";
             MailMessage mess = new MailMessage(from, to, subject, body);
+            try
+            {
+                client.Send(mess);
+                Console.WriteLine("Message send");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.ReadKey();
+            }
         }
     }
 }
