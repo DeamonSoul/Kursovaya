@@ -22,4 +22,18 @@ namespace WindowsFormsApp2
             return true;
         }
 
-   
+        public static bool CheckPassword(string password)
+        {
+
+            foreach (char c in password)
+            {
+                if (c == ' ')
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        
