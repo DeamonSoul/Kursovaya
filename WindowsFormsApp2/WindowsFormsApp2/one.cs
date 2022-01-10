@@ -36,4 +36,12 @@ namespace WindowsFormsApp2
             return true;
         }
 
-        
+        public static bool CheckEmail(string email)
+        {
+            string[] strs = email.Split(new char[] { '@' });
+
+            if (strs.Length != 2)
+                return false;
+            else
+                return true;
+        }
