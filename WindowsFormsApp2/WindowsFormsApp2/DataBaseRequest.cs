@@ -35,5 +35,10 @@ namespace WindowsFormsApp2
             adapter.Fill(table);
             return table;
         }
+
+        public static void WriteNewUser(string inn, string name, string email, string password)
+        {
+            
+        }
     }
 }
