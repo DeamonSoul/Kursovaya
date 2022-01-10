@@ -13,6 +13,16 @@ namespace WindowsFormsApp2
 {
     internal static class DataBaseRequest
     {
+        /// <summary>
+        /// Выполняет команду и возвращает данные в виде DataTable
+        /// </summary>
+        /// <param name="commandStr">
+        /// Командная строка, в которой аргументы обозначаются как @P0, @P1 и т.д.
+        /// </param>
+        /// <param name="args">
+        /// Последовательность строковых значений соответствующих аргументов
+        /// </param>
+        /// <returns></returns>
         public static DataTable AskForData(string commandStr, params string[] args)
         {
             DataBaseInit DB = new DataBaseInit();
