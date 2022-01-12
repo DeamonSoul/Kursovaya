@@ -29,20 +29,13 @@ namespace WindowsFormsApp2
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
             MySqlCommand command = new MySqlCommand(commandStr, DB.GetConnector());
-            for (int i = 0; i < args.Length; i++)
+            for (int i = 0; i< args.Length; i++)
                 command.Parameters.Add("@P" + i.ToString(), MySqlDbType.VarChar).Value = args[i];
             adapter.SelectCommand = command;
             adapter.Fill(table);
             return table;
         }
 
-        /// <summary>
-        /// Заносит в базу данных нового пользователя и создает новую таблицу для чеков
-        /// </summary>
-        /// <param name="inn"></param>
-        /// <param name="name"></param>
-        /// <param name="email"></param>
-        /// <param name="password"></param>
         public static void WriteNewUser(string inn, string name, string email, string password)
         {
             DataBaseInit DB = new DataBaseInit();
@@ -63,11 +56,52 @@ namespace WindowsFormsApp2
                 return;
             }
 
+            //Создать таблицу для чеков
+            //CREATE TABLE `users`.`list111111111111` ( `Id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT , `CustomerInn` VARCHAR(12) NOT NULL , `CustomerType` VARCHAR(1) NOT NULL , `ProductName` VARCHAR(50) NOT NULL , `Price` VARCHAR(15) NOT NULL, PRIMARY KEY (`ID`) ) ENGINE = InnoDB;
+
             command = new MySqlCommand("CREATE TABLE `users`.`list" + inn.ToString() + "` ( `Id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT , `CustomerInn` VARCHAR(12) NOT NULL , `CustomerType` VARCHAR(1) NOT NULL , `ProductName` VARCHAR(50) NOT NULL , `Price` VARCHAR(15) NOT NULL, PRIMARY KEY (`ID`) ) ENGINE = InnoDB", DB.GetConnector());
 
             command.ExecuteNonQuery();
 
             DB.CloseConnection();
+        }
+
+        public static void WriteNewCheque(string tableName, Cheque cheque)
+        {
+            DataBaseInit DB = new DataBaseInit();
+            MySqlCommand command = new MySqlCommand("INSERT INTO `" + tableName + "` (`Id`, `Date`, `CustomerInn`, `CustomerType`, `ProductName`, `Price`) VALUES(NULL, @P0, @P1, @P2, @P3, @P4)", DB.GetConnector());
+            command.Parameters.Add("@P0", MySqlDbType.VarChar).Value = cheque.Date;
+            command.Parameters.Add("@P1", MySqlDbType.VarChar).Value = cheque.CustomerInn;
+            command.Parameters.Add("@P2", MySqlDbType.VarChar).Value = cheque.CustomerType;
+            command.Parameters.Add("@P3", MySqlDbType.VarChar).Value = cheque.ProductName;
+            command.Parameters.Add("@P4", MySqlDbType.VarChar).Value = cheque.Price;
+
+            DB.OpenConnection();
+
+            command.ExecuteNonQuery();
+
+            DB.CloseConnection();
+        }
+    }
+    internal class DataBaseInit
+    {
+        private MySqlConnection connector = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=users");
+
+        public MySqlConnection GetConnector()
+        {
+            return connector;
+        }
+
+        public void OpenConnection()
+        {
+            if (connector.State == System.Data.ConnectionState.Closed)
+                connector.Open();
+        }
+
+        public void CloseConnection()
+        {
+            if (connector.State == System.Data.ConnectionState.Open)
+                connector.Close();
         }
     }
 }
